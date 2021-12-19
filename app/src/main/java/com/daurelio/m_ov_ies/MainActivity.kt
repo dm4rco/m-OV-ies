@@ -4,13 +4,14 @@ package com.daurelio.m_ov_ies
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.daurelio.m_ov_ies.api.MovieAPIInterface
+import com.daurelio.m_ov_ies.api.MovieAPIResponseClass
 import com.daurelio.m_ov_ies.databinding.ActivityMainBinding
-import okhttp3.OkHttpClient
+import com.daurelio.m_ov_ies.helper.AppModule
+import okhttp3.internal.wait
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 
 const val BASE_URL: String = "https://streaming-availability.p.rapidapi.com/"
@@ -24,40 +25,48 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //Initialization of API Service
+        val apiService = AppModule().provideApiService(AppModule().provideHttpClient())
 
-        setupRetrofitTemp()
-        //TODO: Datanbinding
-
-    }
-
-
-    private fun setupRetrofitTemp() {
-        val builder = OkHttpClient.Builder()
-
-        builder.interceptors().add(AuthenticationInterceptor())
-        val client = builder.build()
-
-        val api = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(client)
-            .build().create(MovieAPIInterface::class.java)
-
-        val adapterData: MutableList<MovieClass> = ArrayList<MovieClass>()
-
+        //Temp values
         val country = "de"
         val service = "netflix"
         val genre = 18
 
-        val call = api.getSearch(
+        val movies = searchMovies(apiService, country, service, genre)
+
+        movies.forEach {
+            println("New Movie: ")
+            println(it.genres)
+        }
+        binding.tvTitle.text = movies[0]!!.imdbID
+    }
+
+    private fun searchMovies(
+        apiService: MovieAPIInterface,
+        country: String,
+        service: String,
+        genre: Int
+    ): MutableList<MovieClass> {
+
+        val adapterData: MutableList<MovieClass> = ArrayList<MovieClass>()
+
+        // The API call to Basic Search with given parameters
+        val call = apiService.getSearch(
             country = country,
             service = service,
             genre = genre
         )
-        val result = call.enqueue(object: Callback<MovieAPIResponseClass> {
+
+        //Result mapping to our interface
+        //TODO: Change enqueue to execute as enqueue is for Async calls. I need to wait for the response before continuing
+        //Review the documentation
+        val result = call.enqueue(object : Callback<MovieAPIResponseClass> {
+
             override fun onFailure(call: Call<MovieAPIResponseClass>, t: Throwable) {
                 binding.tvTitle.text = "Something went wrong!"
                 print(t.localizedMessage)
+                adapterData.clear()
             }
 
             override fun onResponse(
@@ -66,13 +75,6 @@ class MainActivity : AppCompatActivity() {
             ) {
                 if (response.isSuccessful) {
                     Toast.makeText(this@MainActivity, "Call OK", Toast.LENGTH_LONG).show()
-
-                    //TODO: Delete this
-                    println("Response is Successful!?")
-                    println(response.message())
-                    println(response.code())
-                    println(response.raw())
-                    println(response.body())
 
                     val searchResponse: MovieAPIResponseClass? = response.body()
                     searchResponse!!.results.forEach {
@@ -102,5 +104,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+
+        return adapterData
     }
 }
