@@ -2,7 +2,6 @@ package com.daurelio.m_ov_ies
 
 import retrofit2.Call
 import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.Query
 
 interface MovieAPIInterface {
@@ -19,7 +18,7 @@ interface MovieAPIInterface {
         @Query("page") page: Int = 1,
         @Query("output_language") output_language: String = "en",
         @Query("language") language: String = "en"
-    ): Call<List<MovieClass>>
+    ): Call<MovieAPIResponseClass>
 
     @GET("genres")
     fun getGenres(): Call<Map<Int, String>>
