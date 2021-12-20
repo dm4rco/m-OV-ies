@@ -1,63 +1,67 @@
 package com.daurelio.m_ov_ies
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
+import com.daurelio.m_ov_ies.api.MovieAPIInterface
+import com.daurelio.m_ov_ies.api.MovieAPIResponseClass
 import com.daurelio.m_ov_ies.databinding.ActivityMainBinding
-import okhttp3.OkHttpClient
+import com.daurelio.m_ov_ies.helper.AppModule
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 
 const val BASE_URL: String = "https://streaming-availability.p.rapidapi.com/"
+val adapterData: MutableList<MovieClass> = ArrayList<MovieClass>()
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MovieClickListener {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var mainActivity: MainActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //Initialization of API Service
+        val apiService = AppModule().provideApiService(AppModule().provideHttpClient())
 
-        setupRetrofitTemp()
-        //TODO: Datanbinding
+        mainActivity = this
 
-    }
-
-
-    private fun setupRetrofitTemp() {
-        val builder = OkHttpClient.Builder()
-
-        builder.interceptors().add(AuthenticationInterceptor())
-        val client = builder.build()
-
-        val api = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(client)
-            .build().create(MovieAPIInterface::class.java)
-
-        val adapterData: MutableList<MovieClass> = ArrayList<MovieClass>()
-
+        //Temp values
         val country = "de"
         val service = "netflix"
         val genre = 18
 
-        val call = api.getSearch(
+        searchMovies(apiService, country, service, genre)
+    }
+
+    private fun searchMovies(
+        apiService: MovieAPIInterface,
+        country: String,
+        service: String,
+        genre: Int
+    ) {
+
+        // The API call to Basic Search with given parameters
+        val call = apiService.getSearch(
             country = country,
             service = service,
             genre = genre
         )
-        val result = call.enqueue(object: Callback<MovieAPIResponseClass> {
+
+        //Result mapping to our interface
+        val result = call.enqueue(object : Callback<MovieAPIResponseClass> {
+
             override fun onFailure(call: Call<MovieAPIResponseClass>, t: Throwable) {
-                binding.tvTitle.text = "Something went wrong!"
+                Toast.makeText(this@MainActivity, "Something went wrong. Please try again.", Toast.LENGTH_LONG).show()
                 print(t.localizedMessage)
+                adapterData.clear()
             }
 
             override fun onResponse(
@@ -66,13 +70,6 @@ class MainActivity : AppCompatActivity() {
             ) {
                 if (response.isSuccessful) {
                     Toast.makeText(this@MainActivity, "Call OK", Toast.LENGTH_LONG).show()
-
-                    //TODO: Delete this
-                    println("Response is Successful!?")
-                    println(response.message())
-                    println(response.code())
-                    println(response.raw())
-                    println(response.body())
 
                     val searchResponse: MovieAPIResponseClass? = response.body()
                     searchResponse!!.results.forEach {
@@ -93,6 +90,7 @@ class MainActivity : AppCompatActivity() {
                         )
                         adapterData.add(movie)
                     }
+                    updateMovieOnUI()
                 } else {
                     Toast.makeText(
                         this@MainActivity,
@@ -103,4 +101,26 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
+    //Fill recycler view with movie cards
+    private fun updateMovieOnUI() {
+        adapterData.forEach {
+            println("New Movie: ")
+            println(it.genres)
+        }
+        //binding.tvTitle.text = adapterData.size.toString()
+
+        binding.recyclerView.apply {
+            layoutManager = GridLayoutManager(applicationContext, 3)
+            adapter = CardAdapter(adapterData, mainActivity)
+        }
+
+    }
+
+    override fun onClick(movie: MovieClass) {
+        val intent = Intent(applicationContext, MovieDetailActivity::class.java)
+        intent.putExtra(MOVIE_ID_EXTRA, movie.id)
+        startActivity(intent)
+    }
+
 }

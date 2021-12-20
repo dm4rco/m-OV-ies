@@ -1,5 +1,6 @@
-package com.daurelio.m_ov_ies
+package com.daurelio.m_ov_ies.api
 
+import com.daurelio.m_ov_ies.api.MovieAPIResponseClass
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

@@ -2,6 +2,10 @@ package com.daurelio.m_ov_ies
 
 import retrofit2.http.Url
 
+var movieList = mutableListOf<MovieClass>()
+
+val MOVIE_ID_EXTRA = "movieExtra"
+
 data class MovieClass(
     val imdbID: String,
     val imdbRating: Int?,
@@ -15,5 +19,6 @@ data class MovieClass(
     val movieDescription: String?,
     val originalLanguage: String?,
     val posterURL: Url?,
-    val streamingProvider: ArrayList<String>?
+    val streamingProvider: ArrayList<String>?,
+    val id: Int? = movieList.size
 )
