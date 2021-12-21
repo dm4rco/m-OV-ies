@@ -4,7 +4,7 @@ import retrofit2.http.Url
 
 var movieList = mutableListOf<MovieClass>()
 
-val MOVIE_ID_EXTRA = "movieExtra"
+const val MOVIE_ID_EXTRA = "movieExtra"
 
 data class MovieClass(
     val imdbID: String,
@@ -12,13 +12,13 @@ data class MovieClass(
     val originalMovieTitle: String?,
     val countriesMovieTitle: String?,
     val genres: ArrayList<Int>?,
-    val countryOfOrigin: String?,
+    val countryOfOrigin: ArrayList<String>?,
     val releaseYear: Int?,
     val runTimeInMinutes: Int?,
     val cast: ArrayList<String>?,
     val movieDescription: String?,
     val originalLanguage: String?,
-    val posterURL: Url?,
+    val posterURL: String?,
     val streamingProvider: ArrayList<String>?,
     val id: Int? = movieList.size
 )

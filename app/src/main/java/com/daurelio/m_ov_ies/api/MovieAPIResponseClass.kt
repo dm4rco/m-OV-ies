@@ -3,23 +3,23 @@ package com.daurelio.m_ov_ies.api
 import retrofit2.http.Url
 
 data class MovieAPIResponseClass(
-    val results: List<Result>,
+    val results: List<Movie>,
     val totalPages: Int,
 
     ) {
-    data class Result(
+    data class Movie(
         val imdbID: String,
         val imdbRating: Int?,
-        val originalMovieTitle: String,
-        val countriesMovieTitle: String?,
+        val title: String,
+        val originalTitle: String?,
         val genres: ArrayList<Int>,
-        val countryOfOrigin: String,
-        val releaseYear: Int,
-        val runTimeInMinutes: Int,
+        val countries: ArrayList<String>,
+        val year: Int,
+        val runtime: Int,
         val cast: ArrayList<String>,
-        val movieDescription: String?,
+        val overview: String?,
         val originalLanguage: String,
-        val posterURL: Url,
-        val streamingProvider: ArrayList<String>? //streaming info is another array inside the JSONs
+        val posterPath: String,
+        //val streamingInfo: ArrayList<String>? //streaming info is another array inside the JSONs
     )
 }

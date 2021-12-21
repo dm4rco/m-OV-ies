@@ -16,6 +16,7 @@ import retrofit2.Response
 
 
 const val BASE_URL: String = "https://streaming-availability.p.rapidapi.com/"
+const val POSTER_HOST: String = "https://image.tmdb.org/t/p/w185"
 val adapterData: MutableList<MovieClass> = ArrayList<MovieClass>()
 
 class MainActivity : AppCompatActivity(), MovieClickListener {
@@ -60,6 +61,7 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
 
             override fun onFailure(call: Call<MovieAPIResponseClass>, t: Throwable) {
                 Toast.makeText(this@MainActivity, "Something went wrong. Please try again.", Toast.LENGTH_LONG).show()
+                println("CALL FAILED!")
                 print(t.localizedMessage)
                 adapterData.clear()
             }
@@ -69,24 +71,22 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
                 response: Response<MovieAPIResponseClass>
             ) {
                 if (response.isSuccessful) {
-                    Toast.makeText(this@MainActivity, "Call OK", Toast.LENGTH_LONG).show()
-
                     val searchResponse: MovieAPIResponseClass? = response.body()
                     searchResponse!!.results.forEach {
                         val movie = MovieClass(
                             imdbID = it.imdbID,
                             imdbRating = it.imdbRating,
-                            originalMovieTitle = it.originalMovieTitle,
-                            countriesMovieTitle = it.countriesMovieTitle,
+                            originalMovieTitle = it.title,
+                            countriesMovieTitle = it.originalTitle,
                             genres = it.genres,
-                            countryOfOrigin = it.countryOfOrigin,
-                            releaseYear = it.releaseYear,
-                            runTimeInMinutes = it.runTimeInMinutes,
+                            countryOfOrigin = it.countries,
+                            releaseYear = it.year,
+                            runTimeInMinutes = it.runtime,
                             cast = it.cast,
-                            movieDescription = it.movieDescription,
+                            movieDescription = it.overview,
                             originalLanguage = it.originalLanguage,
-                            posterURL = it.posterURL,
-                            streamingProvider = it.streamingProvider
+                            posterURL = POSTER_HOST + it.posterPath,
+                            streamingProvider = null
                         )
                         adapterData.add(movie)
                     }
@@ -104,14 +104,8 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
 
     //Fill recycler view with movie cards
     private fun updateMovieOnUI() {
-        adapterData.forEach {
-            println("New Movie: ")
-            println(it.genres)
-        }
-        //binding.tvTitle.text = adapterData.size.toString()
-
         binding.recyclerView.apply {
-            layoutManager = GridLayoutManager(applicationContext, 3)
+            layoutManager = GridLayoutManager(applicationContext, 2)
             adapter = CardAdapter(adapterData, mainActivity)
         }
 
