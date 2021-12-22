@@ -1,8 +1,6 @@
 package com.daurelio.m_ov_ies
 
-var movieList = mutableListOf<MovieClass>()
-
-const val MOVIE_ID_EXTRA = "movieExtra"
+const val MOVIE_ID = "movieExtra"
 
 data class MovieClass(
     val imdbID: String,
@@ -12,11 +10,11 @@ data class MovieClass(
     val genres: ArrayList<Int>?,
     val countryOfOrigin: ArrayList<String>?,
     val releaseYear: Int?,
-    val runTimeInMinutes: Int?,
+    val runTimeInMinutes: Long?,
     val cast: ArrayList<String>?,
     val movieDescription: String?,
     val originalLanguage: String?,
     val posterURL: String?,
     val streamingProvider: ArrayList<String>?,
-    val id: Int? = movieList.size
+    val id: Int? = 0
 )

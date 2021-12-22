@@ -96,8 +96,10 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
             ) {
                 if (response.isSuccessful) {
                     val searchResponse: MovieAPIResponseClass? = response.body()
-                    searchResponse!!.results.forEach {
+
+                    searchResponse!!.results.forEachIndexed { index, it ->
                         val movie = MovieClass(
+                            id = index,
                             imdbID = it.imdbID,
                             imdbRating = it.imdbRating,
                             originalMovieTitle = it.title,
@@ -145,7 +147,7 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
 
     override fun onClick(movie: MovieClass) {
         val intent = Intent(applicationContext, MovieDetailActivity::class.java)
-        intent.putExtra(MOVIE_ID_EXTRA, movie.id)
+        intent.putExtra(MOVIE_ID, movie.id)
         startActivity(intent)
     }
 

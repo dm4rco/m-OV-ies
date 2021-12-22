@@ -15,7 +15,7 @@ data class MovieAPIResponseClass(
         val genres: ArrayList<Int>,
         val countries: ArrayList<String>,
         val year: Int,
-        val runtime: Int,
+        val runtime: Long,
         val cast: ArrayList<String>,
         val overview: String?,
         val originalLanguage: String,
