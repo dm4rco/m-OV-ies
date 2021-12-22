@@ -16,7 +16,7 @@
         android:layout_gravity="center"
         android:adjustViewBounds="true"
         android:contentDescription="@string/cover"
-        android:src="@drawable/ic_image_not_found" />
+        tools:src="@drawable/ic_image_not_found" />
 
     <TextView
         android:id="@+id/tv_movieTitle"

@@ -15,7 +15,8 @@ interface MovieAPIInterface {
         @Query("country") country: String,
         @Query("service") service: String,
         @Query("type") type: String = "movie",
-        @Query("genre") genre: Int,
+        @Query("genre") genre: Int? = null,
+        @Query("keyword") keyword: String? = null,
         @Query("page") page: Int = 1,
         @Query("output_language") output_language: String = "en",
         @Query("language") language: String = "en"

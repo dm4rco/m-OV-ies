@@ -1,7 +1,5 @@
 package com.daurelio.m_ov_ies
 
-import retrofit2.http.Url
-
 var movieList = mutableListOf<MovieClass>()
 
 const val MOVIE_ID_EXTRA = "movieExtra"
