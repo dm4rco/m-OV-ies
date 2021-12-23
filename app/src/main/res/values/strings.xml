@@ -4,4 +4,20 @@
     <string name="search">Search</string>
     <string name="cover">Cover</string>
     <string name="placeholder_text">Placeholder Text</string>
+    <string name="search_settings">Search Settings</string>
+    <string name="germany">Germany</string>
+    <string name="usa">United States of America</string>
+    <string name="search_in_country">Search in Country</string>
+    <string name="include_the_following_services">Include the following services</string>
+    <string name="netflix">Netflix</string>
+    <string name="amazon_prime">Amazon Prime</string>
+    <string name="disney">Disney</string>
+    <string name="hulu">Hulu</string>
+    <string name="peacock">Peacock</string>
+    <string name="paramount">Paramount</string>
+    <string name="starz">Starz</string>
+    <string name="showtime">Showtime</string>
+    <string name="apple">Apple</string>
+    <string name="mubi">Mubi</string>
+    <string name="hbo">HBO</string>
 </resources>

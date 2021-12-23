@@ -5,11 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.opengl.Visibility
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.daurelio.m_ov_ies.api.MovieAPIInterface
@@ -53,6 +55,12 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
 
         binding.btnSearch.setOnClickListener {
             executeSearch()
+        }
+
+        binding.tbMainActivity.menu.findItem(R.id.ab_settings).setOnMenuItemClickListener {
+            val intent = Intent(applicationContext, MovieSettingsActivity::class.java)
+            startActivity(intent)
+            true
         }
 
         binding.etMovieSearch.setOnEditorActionListener { _, actionId, _ ->
@@ -154,12 +162,6 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
         }
     }
 
-    override fun onClick(movie: MovieClass) {
-        val intent = Intent(applicationContext, MovieDetailActivity::class.java)
-        intent.putExtra(MOVIE_ID, movie.id)
-        startActivity(intent)
-    }
-
     private fun executeSearch() {
 
         val searchKeyword = binding.etMovieSearch.text?.toString()
@@ -187,5 +189,12 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
+    }
+
+    //On Detail card click
+    override fun onClick(movie: MovieClass) {
+        val intent = Intent(applicationContext, MovieDetailActivity::class.java)
+        intent.putExtra(MOVIE_ID, movie.id)
+        startActivity(intent)
     }
 }
