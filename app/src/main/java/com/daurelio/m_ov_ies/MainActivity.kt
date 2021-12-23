@@ -3,7 +3,10 @@ package com.daurelio.m_ov_ies
 
 import android.content.Context
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Bundle
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -130,6 +133,9 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
 
     //Fill recycler view with movie cards
     private fun updateMoviesOnUI() {
+        binding.rlLoading.visibility = GONE
+        binding.recyclerView.visibility = VISIBLE
+
         binding.recyclerView.apply {
             layoutManager = GridLayoutManager(applicationContext, 2)
             adapter = CardAdapter(adapterData, mainActivity)
@@ -138,6 +144,9 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
 
     private fun clearMoviesOnUI() {
         adapterData.clear()
+
+        binding.rlLoading.visibility = VISIBLE
+        binding.recyclerView.visibility = GONE
 
         binding.recyclerView.apply {
             layoutManager = GridLayoutManager(applicationContext, 2)
