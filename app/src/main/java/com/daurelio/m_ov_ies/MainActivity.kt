@@ -3,6 +3,7 @@ package com.daurelio.m_ov_ies
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.opengl.Visibility
 import android.os.Bundle
 import android.view.MenuItem
@@ -45,6 +46,12 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
         setContentView(binding.root)
 
         mainActivity = this
+        val settings: SharedPreferences = getSharedPreferences("Settings", MODE_PRIVATE)
+
+        if(!MovieSettingsActivity().checkSettings(settings)) {
+            val intent = Intent(this, MovieSettingsActivity::class.java)
+            startActivity(intent)
+        }
 
 
         searchMovies(
