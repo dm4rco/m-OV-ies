@@ -158,7 +158,7 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
 
                         searchResponse!!.results.forEachIndexed { index, it ->
                             val movie = MovieClass(
-                                id = index,
+                                id = it.imdbID,
                                 imdbID = it.imdbID,
                                 imdbRating = it.imdbRating,
                                 originalMovieTitle = it.title,
@@ -171,7 +171,7 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
                                 movieDescription = it.overview,
                                 originalLanguage = it.originalLanguage,
                                 posterURL = POSTER_HOST + it.posterPath,
-                                streamingProvider = null
+                                streamingProvider = it.streamingInfo
                             )
                             adapterData.add(movie)
                         }

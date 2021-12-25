@@ -16,14 +16,15 @@ class MovieDetailActivity : AppCompatActivity() {
         binding = ActivityMovieDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val movieID = intent.getIntExtra(MOVIE_ID, 0)
-        val movie = movieFromID(movieID)
+        val movieID = intent.getStringExtra(MOVIE_ID)
+        val movie = movieFromID(movieID!!)
 
         if (movie != null) {
 
             binding.tvMovieTitle.text = movie.originalMovieTitle
             binding.tvMovieDesc.text = movie.movieDescription
 
+            binding.tvServicesContent.text = movie.streamingProvider.keys.toString()
             binding.tvImdbIDContent.text = movie.imdbID
             binding.tvImdbRatingContent.text = movie.imdbRating.toString()
             binding.tvGenresContent.text = movie.genres.toString()
@@ -45,7 +46,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
     }
 
-    private fun movieFromID(movieID: Int): MovieClass? {
+    private fun movieFromID(movieID: String): MovieClass? {
         for (movie in adapterData) {
             if(movie.id == movieID) {
                 return movie
