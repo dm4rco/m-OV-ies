@@ -171,7 +171,7 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
                                 movieDescription = it.overview,
                                 originalLanguage = it.originalLanguage,
                                 posterURL = POSTER_HOST + it.posterPath,
-                                streamingProvider = it.streamingInfo
+                                streamingProvider = null
                             )
                             adapterData.add(movie)
                         }
