@@ -20,7 +20,6 @@ class CardViewHolder(
         cardCellBinding.tvMovieTitle.text = movie.originalMovieTitle
         cardCellBinding.tvMovieDesc.text = movie.movieDescription
 
-        Picasso.get().isLoggingEnabled = true
         Picasso.get()
             .load(movie.posterURL)
             .placeholder(R.drawable.ic_image_not_found)

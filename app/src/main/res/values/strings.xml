@@ -20,4 +20,14 @@
     <string name="apple">Apple</string>
     <string name="mubi">Mubi</string>
     <string name="hbo">HBO</string>
+    <string name="genres">Genres:</string>
+    <string name="imdb_rating">IMDB Rating:</string>
+    <string name="imdb_id">IMDB ID:</string>
+    <string name="available_on">Available on:</string>
+    <string name="release_year">Release Year:</string>
+    <string name="runtime">Runtime</string>
+    <string name="country_of_origin">Country of origin:</string>
+    <string name="original_movie_title">Original Movie Title:</string>
+    <string name="original_language">Original Language:</string>
+    <string name="cast">Cast:</string>
 </resources>

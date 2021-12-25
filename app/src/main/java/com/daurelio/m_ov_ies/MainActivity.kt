@@ -36,19 +36,16 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
     //Initialization of APIService
     private val apiService = AppModule().provideApiService(AppModule().provideHttpClient())
 
-    //Temp values for mandatory and static fields for search
-    private val country = "de"
-    private val service = "netflix"
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         mainActivity = this
+
         val settings: SharedPreferences = getSharedPreferences("Settings", MODE_PRIVATE)
 
-        if(!MovieSettingsActivity().checkSettings(settings)) {
+        if (!MovieSettingsActivity().checkSettings(settings)) {
             val intent = Intent(this, MovieSettingsActivity::class.java)
             startActivity(intent)
         }
@@ -56,8 +53,6 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
 
         searchMovies(
             apiService = apiService,
-            country = country,
-            service = service
         )
 
         binding.btnSearch.setOnClickListener {
@@ -80,70 +75,119 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
 
     private fun searchMovies(
         apiService: MovieAPIInterface,
-        country: String,
-        service: String,
-        genre: Int? = null,
         keyword: String? = null
     ) {
 
-        // The API call to Basic Search with given parameters
-        val call = apiService.getSearch(
-            country = country,
-            service = service,
-            genre = genre,
-            keyword = keyword
-        )
+        val settings: SharedPreferences = getSharedPreferences("Settings", MODE_PRIVATE)
+        var country: String? = null
 
-        //Result mapping to our interface
-        val result = call.enqueue(object : Callback<MovieAPIResponseClass> {
+        if (settings.getBoolean("radioButtonGermany", false)) {
+            country = "de"
+        }
+        if (settings.getBoolean("radioButtonUSA", false)) {
+            country = "us"
+        }
 
-            override fun onFailure(call: Call<MovieAPIResponseClass>, t: Throwable) {
-                Toast.makeText(
-                    this@MainActivity,
-                    "Something went wrong. Please try again.",
-                    Toast.LENGTH_LONG
-                ).show()
-                println("CALL FAILED!")
-                print(t.localizedMessage)
-                adapterData.clear()
-            }
 
-            override fun onResponse(
-                call: Call<MovieAPIResponseClass>,
-                response: Response<MovieAPIResponseClass>
-            ) {
-                if (response.isSuccessful) {
-                    val searchResponse: MovieAPIResponseClass? = response.body()
+        val services = mutableListOf<String>()
 
-                    searchResponse!!.results.forEachIndexed { index, it ->
-                        val movie = MovieClass(
-                            id = index,
-                            imdbID = it.imdbID,
-                            imdbRating = it.imdbRating,
-                            originalMovieTitle = it.title,
-                            countriesMovieTitle = it.originalTitle,
-                            genres = it.genres,
-                            countryOfOrigin = it.countries,
-                            releaseYear = it.year,
-                            runTimeInMinutes = it.runtime,
-                            cast = it.cast,
-                            movieDescription = it.overview,
-                            originalLanguage = it.originalLanguage,
-                            posterURL = POSTER_HOST + it.posterPath,
-                            streamingProvider = null
-                        )
-                        adapterData.add(movie)
-                    }
-                    updateMoviesOnUI()
-                } else {
+        if (settings.getBoolean("checkboxNetflix", false)) {
+            services.add("netflix")
+        }
+        if (settings.getBoolean("checkboxPrime", false)) {
+            services.add("prime")
+        }
+        if (settings.getBoolean("checkboxDisney", false)) {
+            services.add("disney")
+        }
+        if (settings.getBoolean("checkboxHBO", false)) {
+            services.add("hbo")
+        }
+        if (settings.getBoolean("checkboxHulu", false)) {
+            services.add("hulu")
+        }
+        if (settings.getBoolean("checkboxPeacock", false)) {
+            services.add("peacock")
+        }
+        if (settings.getBoolean("checkboxParamount", false)) {
+            services.add("paramount")
+        }
+        if (settings.getBoolean("checkboxStarz", false)) {
+            services.add("starz")
+        }
+        if (settings.getBoolean("checkboxShowtime", false)) {
+            services.add("showtime")
+        }
+        if (settings.getBoolean("checkboxApple", false)) {
+            services.add("apple")
+        }
+        if (settings.getBoolean("checkboxMubi", false)) {
+            services.add("mubi")
+        }
+
+
+
+        services.forEach {
+            // The API call to Basic Search with given parameters
+            val call = apiService.getSearch(
+                country = country!!,
+                service = it,
+                keyword = keyword
+            )
+
+            //Result mapping to our interface
+            val result = call.enqueue(object : Callback<MovieAPIResponseClass> {
+
+                override fun onFailure(call: Call<MovieAPIResponseClass>, t: Throwable) {
                     Toast.makeText(
                         this@MainActivity,
-                        "Something went wrong: " + response.code(),
+                        "Something went wrong. Please try again.",
                         Toast.LENGTH_LONG
                     ).show()
+                    println("CALL FAILED!")
+                    print(t.localizedMessage)
+                    adapterData.clear()
                 }
-            }
-        })
+
+                override fun onResponse(
+                    call: Call<MovieAPIResponseClass>,
+                    response: Response<MovieAPIResponseClass>
+                ) {
+                    if (response.isSuccessful) {
+                        val searchResponse: MovieAPIResponseClass? = response.body()
+
+                        searchResponse!!.results.forEachIndexed { index, it ->
+                            val movie = MovieClass(
+                                id = index,
+                                imdbID = it.imdbID,
+                                imdbRating = it.imdbRating,
+                                originalMovieTitle = it.title,
+                                countriesMovieTitle = it.originalTitle,
+                                genres = it.genres,
+                                countryOfOrigin = it.countries,
+                                releaseYear = it.year,
+                                runTimeInMinutes = it.runtime,
+                                cast = it.cast,
+                                movieDescription = it.overview,
+                                originalLanguage = it.originalLanguage,
+                                posterURL = POSTER_HOST + it.posterPath,
+                                streamingProvider = it.streamingInfo
+                            )
+                            adapterData.add(movie)
+                        }
+                        updateMoviesOnUI()
+                    } else {
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Something went wrong: " + response.code(),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+            })
+        }
+
+
     }
 
     //Fill recycler view with movie cards
@@ -177,8 +221,6 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
             clearMoviesOnUI()
             searchMovies(
                 apiService = apiService,
-                country = country,
-                service = service,
                 keyword = searchKeyword
             )
 

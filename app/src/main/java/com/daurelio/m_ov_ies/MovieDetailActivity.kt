@@ -35,8 +35,6 @@ class MovieDetailActivity : AppCompatActivity() {
             binding.tvCastContent.text = movie.cast.toString()
 
 
-
-            Picasso.get().isLoggingEnabled = true
             Picasso.get()
                 .load(movie.posterURL)
                 .placeholder(R.drawable.ic_image_not_found)
