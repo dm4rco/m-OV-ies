@@ -1,5 +1,7 @@
 package com.daurelio.m_ov_ies
 
+import com.daurelio.m_ov_ies.api.MovieAPIResponseClass
+
 const val MOVIE_ID = "movieExtra"
 
 data class MovieClass(
@@ -15,6 +17,6 @@ data class MovieClass(
     val movieDescription: String?,
     val originalLanguage: String?,
     val posterURL: String?,
-    val streamingProvider: ArrayList<String>?,
-    val id: Int? = 0
+    val streamingProvider: HashMap<String, MovieAPIResponseClass.Service>,
+    val id: String
 )

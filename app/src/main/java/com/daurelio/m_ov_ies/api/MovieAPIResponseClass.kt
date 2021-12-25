@@ -20,6 +20,10 @@ data class MovieAPIResponseClass(
         val overview: String?,
         val originalLanguage: String,
         val posterPath: String,
-        //val streamingInfo: ArrayList<String>? //streaming info is another array inside the JSONs
+        val streamingInfo: HashMap<String, Service> //streaming info is another array inside the JSONs
+    )
+
+    data class Service(
+        val name: String
     )
 }
