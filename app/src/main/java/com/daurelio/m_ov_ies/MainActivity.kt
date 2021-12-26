@@ -139,13 +139,9 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
             val result = call.enqueue(object : Callback<MovieAPIResponseClass> {
 
                 override fun onFailure(call: Call<MovieAPIResponseClass>, t: Throwable) {
-                    Toast.makeText(
-                        this@MainActivity,
-                        "Something went wrong. Please try again.",
-                        Toast.LENGTH_LONG
-                    ).show()
-                    println("CALL FAILED!")
-                    print(t.localizedMessage)
+                    binding.rlLoading.visibility = GONE
+                    binding.rlRetry.visibility = VISIBLE
+                    binding.recyclerView.visibility = GONE
                     adapterData.clear()
                 }
 
@@ -177,11 +173,9 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
                         }
                         updateMoviesOnUI()
                     } else {
-                        Toast.makeText(
-                            this@MainActivity,
-                            "Something went wrong: " + response.code(),
-                            Toast.LENGTH_LONG
-                        ).show()
+                        binding.rlLoading.visibility = GONE
+                        binding.rlRetry.visibility = VISIBLE
+                        binding.recyclerView.visibility = GONE
                     }
                 }
             })
@@ -193,6 +187,7 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
     //Fill recycler view with movie cards
     private fun updateMoviesOnUI() {
         binding.rlLoading.visibility = GONE
+        binding.rlRetry.visibility = GONE
         binding.recyclerView.visibility = VISIBLE
 
         binding.recyclerView.apply {
@@ -206,6 +201,7 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
 
         binding.rlLoading.visibility = VISIBLE
         binding.recyclerView.visibility = GONE
+        binding.rlRetry.visibility = GONE
 
         binding.recyclerView.apply {
             layoutManager = GridLayoutManager(applicationContext, 2)
@@ -224,11 +220,14 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
                 keyword = searchKeyword
             )
 
-            closeKeyboard()
+
 
         } else {
-            Toast.makeText(this, "Please enter your keyword before searching", Toast.LENGTH_LONG)
-                .show()
+            //Search failed
+            closeKeyboard()
+            binding.recyclerView.visibility = GONE
+            binding.rlLoading.visibility = GONE
+            binding.rlRetry.visibility = VISIBLE
         }
     }
 

@@ -71,18 +71,37 @@
 
     <RelativeLayout
         android:id="@+id/rl_loading"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:indeterminate="true"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center_horizontal"
-        app:indicatorColor="@color/black"
-        app:indicatorSize="100dp"/>
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:indeterminate="true"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            app:indicatorColor="@color/black"
+            app:indicatorSize="100dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_retry"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+
+        <TextView
+            android:id="@+id/tvSomethingWrong"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="55dp"
+            android:layout_marginEnd="55dp"
+            android:gravity="center"
+            android:text="@string/something_went_wrong"
+            android:textColor="@color/black" />
     </RelativeLayout>
 </LinearLayout>
