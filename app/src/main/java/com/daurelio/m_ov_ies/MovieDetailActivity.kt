@@ -27,7 +27,6 @@ class MovieDetailActivity : AppCompatActivity() {
             binding.tvServicesContent.text = movie.streamingProvider.keys.toString()
             binding.tvImdbIDContent.text = movie.imdbID
             binding.tvImdbRatingContent.text = movie.imdbRating.toString()
-            binding.tvGenresContent.text = movie.genres.toString()
             binding.tvReleaseYearContent.text = movie.releaseYear.toString()
             binding.tvRuntimeContent.text = LocalTime.MIN.plus(Duration.ofMinutes(movie.runTimeInMinutes!!)).toString()
             binding.tvCountryOriginContent.text = movie.countryOfOrigin.toString()

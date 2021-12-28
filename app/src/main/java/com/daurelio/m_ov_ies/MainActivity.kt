@@ -159,7 +159,6 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
                                 imdbRating = it.imdbRating,
                                 originalMovieTitle = it.title,
                                 countriesMovieTitle = it.originalTitle,
-                                genres = it.genres,
                                 countryOfOrigin = it.countries,
                                 releaseYear = it.year,
                                 runTimeInMinutes = it.runtime,

@@ -9,7 +9,6 @@ data class MovieClass(
     val imdbRating: Int?,
     val originalMovieTitle: String?,
     val countriesMovieTitle: String?,
-    val genres: ArrayList<Int>?,
     val countryOfOrigin: ArrayList<String>?,
     val releaseYear: Int?,
     val runTimeInMinutes: Long?,

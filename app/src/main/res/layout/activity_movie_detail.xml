@@ -100,19 +100,6 @@
 
             <TableRow>
                 <TextView
-                    android:id="@+id/tv_genres_header"
-                    android:textColor="@color/black"
-                    android:text="@string/genres"
-                    android:padding="3dip" />
-                <TextView
-                    android:id="@+id/tv_genres_content"
-                    tools:text="Comedy"
-                    android:textColor="@color/black"
-                    android:padding="3dip" />
-            </TableRow>
-
-            <TableRow>
-                <TextView
                     android:id="@+id/tv_releaseYear_header"
                     android:text="@string/release_year"
                     android:textColor="@color/black"
