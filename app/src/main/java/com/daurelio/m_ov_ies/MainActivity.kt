@@ -43,6 +43,10 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
 
         mainActivity = this
 
+        binding.rlLoading.visibility = VISIBLE
+        binding.rlRetry.visibility = GONE
+        binding.recyclerView.visibility = GONE
+
         val settings: SharedPreferences = getSharedPreferences("Settings", MODE_PRIVATE)
 
         if (!MovieSettingsActivity().checkSettings(settings)) {
