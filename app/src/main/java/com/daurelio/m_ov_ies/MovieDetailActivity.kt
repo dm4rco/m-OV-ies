@@ -21,18 +21,29 @@ class MovieDetailActivity : AppCompatActivity() {
 
         if (movie != null) {
 
+            var cast = movie.cast.toString()
+            var countryOfOrigin = movie.countryOfOrigin.toString()
+
+            if (cast == "[]") {
+                cast = "N/A"
+            }
+            if (countryOfOrigin == "[]") {
+                countryOfOrigin = "N/A"
+            }
+
+
             binding.tvMovieTitle.text = movie.originalMovieTitle
             binding.tvMovieDesc.text = movie.movieDescription
 
-            binding.tvServicesContent.text = movie.streamingProvider.keys.toString()
+            binding.tvServicesContent.text = movie.streamingProvider.keys.toString().replace("[", "").replace("]","").uppercase()
             binding.tvImdbIDContent.text = movie.imdbID
             binding.tvImdbRatingContent.text = movie.imdbRating.toString()
             binding.tvReleaseYearContent.text = movie.releaseYear.toString()
             binding.tvRuntimeContent.text = LocalTime.MIN.plus(Duration.ofMinutes(movie.runTimeInMinutes!!)).toString()
-            binding.tvCountryOriginContent.text = movie.countryOfOrigin.toString()
+            binding.tvCountryOriginContent.text = countryOfOrigin.replace("[", "").replace("]","")
             binding.tvOriginalTitleContent.text = movie.originalMovieTitle
             binding.tvOriginalLanguageContent.text = movie.originalLanguage
-            binding.tvCastContent.text = movie.cast.toString()
+            binding.tvCastContent.text = cast.replace("[", "").replace("]","")
 
 
             Picasso.get()
