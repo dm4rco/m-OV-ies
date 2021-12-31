@@ -222,16 +222,13 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
                 apiService = apiService,
                 keyword = searchKeyword
             )
-
-
-
         } else {
             //Search failed
-            closeKeyboard()
             binding.recyclerView.visibility = GONE
             binding.rlLoading.visibility = GONE
             binding.rlRetry.visibility = VISIBLE
         }
+        closeKeyboard()
     }
 
     private fun closeKeyboard() {
