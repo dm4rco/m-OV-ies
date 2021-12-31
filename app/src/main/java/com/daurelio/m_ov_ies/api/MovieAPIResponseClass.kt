@@ -1,7 +1,5 @@
 package com.daurelio.m_ov_ies.api
 
-import retrofit2.http.Url
-
 data class MovieAPIResponseClass(
     val results: List<Movie>,
     val totalPages: Int,

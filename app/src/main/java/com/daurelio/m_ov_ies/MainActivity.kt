@@ -153,10 +153,12 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
                     call: Call<MovieAPIResponseClass>,
                     response: Response<MovieAPIResponseClass>
                 ) {
+                    //Clear the results before searching
+                    adapterData.clear()
                     if (response.isSuccessful) {
                         val searchResponse: MovieAPIResponseClass? = response.body()
 
-                        searchResponse!!.results.forEachIndexed { index, it ->
+                        searchResponse!!.results.forEachIndexed { _, it ->
                             val movie = MovieClass(
                                 id = it.imdbID,
                                 imdbID = it.imdbID,
@@ -192,6 +194,8 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
         binding.rlLoading.visibility = GONE
         binding.rlRetry.visibility = GONE
         binding.recyclerView.visibility = VISIBLE
+
+        val uniqueMovies : List<MovieClass> = adapterData.distinctBy { it.id }
 
         binding.recyclerView.apply {
             layoutManager = GridLayoutManager(applicationContext, 2)
