@@ -13,16 +13,16 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.daurelio.m_ov_ies.databinding.SettingsBinding
+import com.daurelio.m_ov_ies.databinding.ActivitySettingsBinding
 
 class MovieSettingsActivity : AppCompatActivity() {
 
-    private lateinit var binding: SettingsBinding
+    private lateinit var binding: ActivitySettingsBinding
 
     //On Creation function that is being called when the settings screen is opened
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = SettingsBinding.inflate(layoutInflater)
+        binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         writeSettingsToUI()
