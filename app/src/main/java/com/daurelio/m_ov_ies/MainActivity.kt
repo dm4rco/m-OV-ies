@@ -195,11 +195,11 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
         binding.rlRetry.visibility = GONE
         binding.recyclerView.visibility = VISIBLE
 
-        val uniqueMovies : List<MovieClass> = adapterData.distinctBy { it.id }
+        val uniqueMovies: List<MovieClass> = adapterData.distinctBy { it.id }
 
         binding.recyclerView.apply {
             layoutManager = GridLayoutManager(applicationContext, 2)
-            adapter = CardAdapter(adapterData, mainActivity)
+            adapter = CardAdapter(uniqueMovies, mainActivity)
         }
     }
 

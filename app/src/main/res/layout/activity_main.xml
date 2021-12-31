@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
     android:orientation="vertical"
     android:weightSum="10"
-    android:background="@color/white"
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -14,10 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        app:title="@string/app_name"
-        app:titleTextColor="@color/white"
         android:elevation="4dp"
-        app:menu="@menu/action_bar_main_activity"/>
+        app:menu="@menu/action_bar_main_activity"
+        app:title="@string/app_name"
+        app:titleTextColor="@color/white" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,23 +28,23 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilMovieSearch"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:boxStrokeColor="@color/black"
-            app:hintTextColor="@color/black"
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="2"
-            android:textColorHint="@color/black">
+            android:textColorHint="@color/black"
+            app:boxStrokeColor="@color/black"
+            app:hintTextColor="@color/black">
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etMovieSearch"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColor="@color/black"
-                android:inputType="textNoSuggestions"
+                android:hint="@string/search_movie"
                 android:imeActionLabel="Search"
                 android:imeOptions="actionSearch"
-                android:hint="@string/search_movie"/>
+                android:inputType="textNoSuggestions"
+                android:textColor="@color/black" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -55,35 +55,34 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
             android:backgroundTint="@color/black"
-            android:textColor="@color/white"
             android:text="@string/search"
+            android:textColor="@color/white"
             android:textSize="12sp" />
-
 
 
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/rl_loading"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:indeterminate="true"
             android:layout_centerInParent="true"
             android:layout_gravity="center_horizontal"
+            android:indeterminate="true"
             app:indicatorColor="@color/black"
-            app:indicatorSize="100dp"/>
+            app:indicatorSize="100dp" />
     </RelativeLayout>
 
     <RelativeLayout

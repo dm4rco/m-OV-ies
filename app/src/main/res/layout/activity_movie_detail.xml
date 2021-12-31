@@ -1,33 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="@color/white"
+        android:orientation="vertical"
         tools:context=".MovieDetailActivity">
 
         <ImageView
             android:id="@+id/iv_thumbnail"
-            android:layout_marginTop="10dp"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="10dp"
             android:adjustViewBounds="true"
             android:contentDescription="@string/cover"
             tools:src="@drawable/ic_image_not_found" />
 
         <TextView
             android:id="@+id/tv_movieTitle"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:lines="2"
             android:text="@string/placeholder_text"
@@ -37,9 +34,9 @@
 
         <TextView
             android:id="@+id/tv_movieDesc"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
@@ -48,139 +45,152 @@
             android:textSize="12sp" />
 
         <TableLayout
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp"
             android:layout_width="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:scrollHorizontally="false"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="30dp"
             android:gravity="center"
+            android:scrollHorizontally="false"
             android:stretchColumns="1">
 
             <TableRow>
+
                 <TextView
                     android:id="@+id/tv_services_header"
-                    android:textColor="@color/black"
+                    android:padding="3dip"
                     android:text="@string/available_on"
-                    android:padding="3dip" />
+                    android:textColor="@color/black" />
+
                 <TextView
                     android:id="@+id/tv_services_content"
-                    tools:text="10"
+                    android:padding="3dip"
                     android:textColor="@color/black"
-                    android:padding="3dip" />
+                    tools:text="10" />
             </TableRow>
 
             <TableRow>
+
                 <TextView
                     android:id="@+id/tv_imdbID_header"
-                    android:textColor="@color/black"
+                    android:padding="3dip"
                     android:text="@string/imdb_id"
-                    android:padding="3dip" />
+                    android:textColor="@color/black" />
+
                 <TextView
                     android:id="@+id/tv_imdbID_content"
-                    tools:text="10"
+                    android:padding="3dip"
                     android:textColor="@color/black"
-                    android:padding="3dip" />
+                    tools:text="10" />
             </TableRow>
 
             <TableRow>
+
                 <TextView
                     android:id="@+id/tv_imdbRating_header"
-                    android:textColor="@color/black"
+                    android:padding="3dip"
                     android:text="@string/imdb_rating"
-                    android:padding="3dip" />
+                    android:textColor="@color/black" />
+
                 <TextView
                     android:id="@+id/tv_imdbRating_content"
-                    tools:text="65"
+                    android:padding="3dip"
                     android:textColor="@color/black"
-                    android:padding="3dip" />
+                    tools:text="65" />
             </TableRow>
 
             <TableRow>
+
                 <TextView
                     android:id="@+id/tv_releaseYear_header"
+                    android:padding="3dip"
                     android:text="@string/release_year"
-                    android:textColor="@color/black"
-                    android:padding="3dip" />
+                    android:textColor="@color/black" />
+
                 <TextView
                     android:id="@+id/tv_releaseYear_content"
-                    tools:text="1993"
+                    android:padding="3dip"
                     android:textColor="@color/black"
-                    android:padding="3dip" />
+                    tools:text="1993" />
             </TableRow>
 
             <TableRow>
+
                 <TextView
                     android:id="@+id/tv_runtime_header"
+                    android:padding="3dip"
                     android:text="@string/runtime"
-                    android:textColor="@color/black"
-                    android:padding="3dip" />
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/tv_runtime_content"
-                    tools:text="120 min"
+                    android:padding="3dip"
                     android:textColor="@color/black"
-                    android:padding="3dip" />
+                    tools:text="120 min" />
             </TableRow>
 
             <TableRow>
+
                 <TextView
                     android:id="@+id/tv_countryOrigin_header"
-                    android:textColor="@color/black"
+                    android:padding="3dip"
                     android:text="@string/country_of_origin"
-                    android:padding="3dip" />
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/tv_countryOrigin_content"
+                    android:padding="3dip"
                     android:textColor="@color/black"
-                    tools:text="Germany"
-                    android:padding="3dip" />
+                    tools:text="Germany" />
             </TableRow>
 
             <TableRow>
+
                 <TextView
                     android:id="@+id/tv_originalTitle_header"
-                    android:textColor="@color/black"
+                    android:padding="3dip"
                     android:text="@string/original_movie_title"
-                    android:padding="3dip" />
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/tv_originalTitle_content"
-                    android:textColor="@color/black"
                     android:layout_weight="1"
-                    tools:text="Spider-Man"
-                    android:padding="3dip" />
+                    android:padding="3dip"
+                    android:textColor="@color/black"
+                    tools:text="Spider-Man" />
             </TableRow>
 
             <TableRow>
+
                 <TextView
                     android:id="@+id/tv_originalLanguage_header"
-                    android:textColor="@color/black"
+                    android:padding="3dip"
                     android:text="@string/original_language"
-                    android:padding="3dip" />
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/tv_originalLanguage_content"
+                    android:padding="3dip"
                     android:textColor="@color/black"
-                    tools:text="English"
-                    android:padding="3dip" />
+                    tools:text="English" />
             </TableRow>
 
             <TableRow>
+
                 <TextView
                     android:id="@+id/tv_cast_header"
-                    android:textColor="@color/black"
+                    android:padding="3dip"
                     android:text="@string/cast"
-                    android:padding="3dip" />
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/tv_cast_content"
-                    android:textColor="@color/black"
-                    tools:text="Tom Holland"
                     android:layout_weight="1"
-                    android:padding="3dip" />
+                    android:padding="3dip"
+                    android:textColor="@color/black"
+                    tools:text="Tom Holland" />
             </TableRow>
         </TableLayout>
 
