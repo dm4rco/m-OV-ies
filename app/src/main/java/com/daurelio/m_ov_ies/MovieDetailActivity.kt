@@ -1,3 +1,10 @@
+/*
+Author: Marco D'Aurelio
+Purpose: Activity for the detail page. This is the activity that is being started when the
+user clicks on any movie. This Activity has the functionality to display movies.
+API Calls are NOT being executed from here.
+*/
+
 package com.daurelio.m_ov_ies
 
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +18,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMovieDetailBinding
 
+    //This function is used on the creation of the detail screen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMovieDetailBinding.inflate(layoutInflater)
@@ -20,7 +28,7 @@ class MovieDetailActivity : AppCompatActivity() {
         val movie = movieFromID(movieID!!)
 
         if (movie != null) {
-
+            //Some preparation in order to display clean data
             var cast = movie.cast.toString()
             var countryOfOrigin = movie.countryOfOrigin.toString()
 
@@ -32,6 +40,7 @@ class MovieDetailActivity : AppCompatActivity() {
             }
 
 
+            //Display of movie data
             binding.tvMovieTitle.text = movie.originalMovieTitle
             binding.tvMovieDesc.text = movie.movieDescription
 
@@ -49,6 +58,7 @@ class MovieDetailActivity : AppCompatActivity() {
             binding.tvCastContent.text = cast.replace("[", "").replace("]", "")
 
 
+            //Load image to the detail screen
             Picasso.get()
                 .load(movie.posterURL)
                 .placeholder(R.drawable.ic_image_not_found)
@@ -59,6 +69,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
     }
 
+    //Function that returns the movie of a given ID
     private fun movieFromID(movieID: String): MovieClass? {
         for (movie in adapterData) {
             if (movie.id == movieID) {

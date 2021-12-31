@@ -1,6 +1,10 @@
+/*
+Author: Marco D'Aurelio
+Purpose: Helper Module in order to create a HTTP Client and an API Service
+*/
+
 package com.daurelio.m_ov_ies.helper
 
-import android.os.Build
 import com.daurelio.m_ov_ies.BASE_URL
 import com.daurelio.m_ov_ies.BuildConfig
 import com.daurelio.m_ov_ies.api.AuthenticationInterceptor

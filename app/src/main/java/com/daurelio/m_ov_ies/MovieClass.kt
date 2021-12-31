@@ -1,3 +1,9 @@
+/*
+Author: Marco D'Aurelio
+Purpose: MovieClass is a description of my custom data class of a Movie.
+It describes what information is available / needed for each movie.
+*/
+
 package com.daurelio.m_ov_ies
 
 import com.daurelio.m_ov_ies.api.MovieAPIResponseClass

@@ -1,18 +1,21 @@
+/*
+Author: Marco D'Aurelio
+Purpose: Activity for the home and search page. This is the activity that is being started when the
+app opens. This Activity has the functionality to search and show movies.
+API Calls are being executed from here.
+*/
+
 package com.daurelio.m_ov_ies
 
 
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.opengl.Visibility
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
-import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.daurelio.m_ov_ies.api.MovieAPIInterface
@@ -26,7 +29,7 @@ import retrofit2.Response
 
 const val BASE_URL: String = "https://streaming-availability.p.rapidapi.com/"
 const val POSTER_HOST: String = "https://image.tmdb.org/t/p/w185"
-val adapterData: MutableList<MovieClass> = ArrayList<MovieClass>()
+val adapterData: MutableList<MovieClass> = ArrayList()
 
 class MainActivity : AppCompatActivity(), MovieClickListener {
 
@@ -36,6 +39,7 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
     //Initialization of APIService
     private val apiService = AppModule().provideApiService(AppModule().provideHttpClient())
 
+    //OnCreation function on the app start
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -49,12 +53,14 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
 
         val settings: SharedPreferences = getSharedPreferences("Settings", MODE_PRIVATE)
 
+        //Move to the settings screen if this is the first time the user is using the app
         if (!MovieSettingsActivity().checkSettings(settings)) {
             val intent = Intent(this, MovieSettingsActivity::class.java)
             startActivity(intent)
         }
 
 
+        //Search movies without search to have random movies on homescreen
         searchMovies(
             apiService = apiService,
         )
@@ -77,6 +83,7 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
         }
     }
 
+    //Main functionality to use the API to search for movies
     private fun searchMovies(
         apiService: MovieAPIInterface,
         keyword: String? = null
@@ -128,8 +135,6 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
         if (settings.getBoolean("checkboxMubi", false)) {
             services.add("mubi")
         }
-
-
 
         services.forEach {
             // The API call to Basic Search with given parameters
@@ -203,6 +208,7 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
         }
     }
 
+    //Remove all movies from the UI
     private fun clearMoviesOnUI() {
         adapterData.clear()
 
@@ -216,8 +222,8 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
         }
     }
 
+    //Function to execute the wanted search
     private fun executeSearch() {
-
         val searchKeyword = binding.etMovieSearch.text?.toString()
 
         if (searchKeyword != null && searchKeyword != "") {
@@ -235,6 +241,7 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
         closeKeyboard()
     }
 
+    //Close the keyboard to be used after search
     private fun closeKeyboard() {
         val view = this.currentFocus
         if (view != null) {
@@ -243,7 +250,7 @@ class MainActivity : AppCompatActivity(), MovieClickListener {
         }
     }
 
-    //On Detail card click
+    //Movie click functionality to open the detail page
     override fun onClick(movie: MovieClass) {
         val intent = Intent(applicationContext, MovieDetailActivity::class.java)
         intent.putExtra(MOVIE_ID, movie.id)

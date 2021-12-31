@@ -1,3 +1,9 @@
+/*
+Author: Marco D'Aurelio
+Purpose: Authentication Interceptor holds the information about the API Authentication.
+This is needed to connect to the API.
+*/
+
 package com.daurelio.m_ov_ies.api
 
 import okhttp3.Interceptor

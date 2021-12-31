@@ -1,6 +1,13 @@
+/*
+Author: Marco D'Aurelio
+Purpose: Activity for the settings page. This is the activity that is being started when the
+user opens the app for the first time or when the user clicks on the settings icon in the nav bar.
+This Activity has the functionality to display and save the user's settings.
+API Calls are NOT being executed from here.
+*/
+
 package com.daurelio.m_ov_ies
 
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -12,7 +19,7 @@ class MovieSettingsActivity : AppCompatActivity() {
 
     private lateinit var binding: SettingsBinding
 
-
+    //On Creation function that is being called when the settings screen is opened
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = SettingsBinding.inflate(layoutInflater)
@@ -36,6 +43,7 @@ class MovieSettingsActivity : AppCompatActivity() {
         }
     }
 
+    //Function to let the user only go back when all needed settings are set by the user
     override fun onBackPressed() {
         val settings: SharedPreferences = getSharedPreferences("Settings", MODE_PRIVATE)
         if (checkSettings(settings)) {
@@ -49,16 +57,14 @@ class MovieSettingsActivity : AppCompatActivity() {
         }
     }
 
+    //Function to return if user has all needed settings applied
     fun checkSettings(settings: SharedPreferences): Boolean {
-
         val radioSettings = returnRadio(settings)
         val checkboxSettings = returnCheckboxes(settings)
-
 
         if (!radioSettings.containsValue(true)) {
             return false
         }
-
         if (!checkboxSettings.containsValue(true)) {
             return false
         }
@@ -66,6 +72,7 @@ class MovieSettingsActivity : AppCompatActivity() {
         return true
     }
 
+    //Function to return the state of the checkboxes (checked or not)
     private fun returnCheckboxes(settings: SharedPreferences): MutableMap<String, Boolean> {
         val checkboxSettings =
             mutableMapOf("checkboxNetflix" to settings.getBoolean("checkboxNetflix", false))
@@ -84,16 +91,16 @@ class MovieSettingsActivity : AppCompatActivity() {
         return checkboxSettings
     }
 
+    //Function to return the state of the radio buttons (checked or not)
     private fun returnRadio(settings: SharedPreferences): MutableMap<String, Boolean> {
-
         val radioSettings =
             mutableMapOf("radioButtonGermany" to settings.getBoolean("radioButtonGermany", false))
         radioSettings["radioButtonUSA"] = settings.getBoolean("radioButtonUSA", false)
 
-
         return radioSettings
     }
 
+    //Function to write user's saved settings into local storage
     private fun writeSettingsIntoLocalStorage() {
         val settings = getSharedPreferences("Settings", MODE_PRIVATE)
 
@@ -115,6 +122,7 @@ class MovieSettingsActivity : AppCompatActivity() {
         }
     }
 
+    //Function to write all settings to the UI from the saved preferences of the phone
     private fun writeSettingsToUI() {
         val settings = getSharedPreferences("Settings", MODE_PRIVATE)
 
@@ -131,7 +139,5 @@ class MovieSettingsActivity : AppCompatActivity() {
         binding.checkboxShowtime.isChecked = settings.getBoolean("checkboxShowtime", false)
         binding.checkboxApple.isChecked = settings.getBoolean("checkboxApple", false)
         binding.checkboxMubi.isChecked = settings.getBoolean("checkboxMubi", false)
-
-
     }
 }

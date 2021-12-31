@@ -1,3 +1,9 @@
+/*
+Author: Marco D'Aurelio
+Purpose: Response Class that describes how the returned JSON is designed.
+This class makes it possible to use the returned JSON.
+*/
+
 package com.daurelio.m_ov_ies.api
 
 data class MovieAPIResponseClass(
